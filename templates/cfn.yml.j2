@@ -5,27 +5,32 @@ AWSTemplateFormatVersion: "2010-09-09"
 
 Description: CloudFormation Resources
 
+Parameters:
+  AccountId:
+    Type: String
+    Description: Incase need to create a bucket in different region
+
 Resources:
   CfnTemplatesBucket:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName:
-        Fn::Sub: "${AWS::AccountId}-cfn-templates"
+        Fn::Sub: "${AccountId}-cfn-templates"
       Tags:
         - Key: Name
           Value: 
-            Fn::Sub: "${AWS::AccountId}-cfn-templates"
+            Fn::Sub: "${AccountId}-cfn-templates"
   CfnLambdaBucket:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: 
-        Fn::Sub: "${AWS::AccountId}-cfn-lambda"
+        Fn::Sub: "${AccountId}-cfn-lambda"
       VersioningConfiguration:
         Status: "Enabled"
       Tags:
         - Key: Name
           Value:
-            Fn::Sub: "${AWS::AccountId}-cfn-lambda"
+            Fn::Sub: "${AccountId}-cfn-lambda"
 {% if lambda.RemoteAccounts is defined %}
   CfnLambdaBucketPolicy:
     Type: "AWS::S3::BucketPolicy"
@@ -44,7 +49,7 @@ Resources:
           - "s3:GetObject"
           - "s3:GetObjectVersion"
           Resource: 
-            Fn::Sub: "arn:aws:s3:::${AWS::AccountId}-cfn-lambda/*"
+            Fn::Sub: "arn:aws:s3:::${AccountId}-cfn-lambda/*"
 {% endif %}
   CfnMasterKey:
     Type: "AWS::KMS::Key"
