@@ -21,13 +21,14 @@
 
 - block:
     - name: get stack facts
-      cloudformation_facts:
+      amazon.aws.cloudformation_info:
         stack_name: "{{ cf_stack_name }}"
         stack_resources: true
+      register: output
       changed_when: false
     - name: set stack facts
       set_fact:
-        Stack: "{{ Stack | combine({ 'Facts': cloudformation[cf_stack_name] },recursive=True) }}"
+        Stack: "{{ Stack | combine({ 'Facts': output['cloudformation'][cf_stack_name] },recursive=True) }}"
     - name: Stack.Facts variable
       debug: msg={{ Stack.Facts }}
       when: debug
