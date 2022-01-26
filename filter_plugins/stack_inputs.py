@@ -9,7 +9,7 @@ class FilterModule(object):
 
 def stack_inputs(inputs, config):
   result = {}
-  for key,value in inputs.items():
+  for key,value in list(inputs.items()):
     try:
       result[key] = str(config.get(key) or value['Default'])
     except KeyError as e:

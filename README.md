@@ -4,12 +4,12 @@ This is an Ansible role for generating CloudFormation templates and deploying Cl
 
 ## Requirements
 
-- Python 2.7
-- PIP package manager (**easy_install pip**)
-- Ansible 2.4 or greater (**pip install ansible**)
-- Boto3 (**pip install boto3**)
-- Netaddr (**pip install netaddr**)
-- AWS CLI (**pip install awscli**) installed and configured
+- Python 3.9
+- PIP for Python 3
+- Ansible Core 2.12 or greater, and Ansible 5.2 or greater (**pip3 install ansible**)
+- Boto3 (**pip3 install boto3**)
+- Netaddr (**pip3 install netaddr**)
+- AWS CLI (**pip3 install awscli**) installed and configured
 
 ## Setup
 
@@ -23,9 +23,9 @@ You should also specify a specific release that is compatible with your playbook
 
 To set this role up as an Ansible Galaxy requirement, first create a `requirements.yml` file in a `roles` subfolder of your playbook and add an entry for this role.  See the [Ansible Galaxy documentation](http://docs.ansible.com/ansible/galaxy.html#installing-multiple-roles-from-a-file) for more details.
 
-```
+```yml
 # Example requirements.yml file
-- src: https://github.com/docker-in-production/aws-cloudformation.git
+- src: https://github.com/velvetropes/aws-cloudformation.git
   scm: git
   version: v1.0
   name: aws-cloudformation
@@ -89,7 +89,7 @@ You can temporarily disable the stack policy for a provisioning run by setting t
 
 This will set to the stack policy to the following policy before stack modification:
 
-```
+```json
 {
     "Statement" : [
       {
@@ -120,7 +120,7 @@ This role sets the following facts that you can use subsequently in your roles:
 
 The following is an example of a playbook configured to use this role.  Note the use of the [AWS STS role](https://github.com/docker-production-aws/aws-sts.git) to obtain STS credentials is separate from this role.
 
-```
+```yml
 ---
 - name: STS Assume Role Playbook
   hosts: "{{ env }}"
